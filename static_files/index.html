@@ -43,6 +43,8 @@
 					if (!timerCookie){
 						Cookies.set("timer", "true", { expires: 5/1440 });
 						socket.send(JSON.stringify(o));
+					}else{
+						alert("Sorry you have to wait 5 minutes between setting points")
 					}
 				});
 				$('#setForm').submit(function( event ) {
@@ -95,7 +97,6 @@
 		<style>
                         body {
                                 text-align: center;
-                                align: center;
                                 overflow: hidden;
                                 margin: 0px;
                                 padding: 0px;
