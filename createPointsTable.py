@@ -33,6 +33,7 @@ table = dynamodb.create_table(
 )
 
 # Wait until the table exists.
+print("please wait...")
 table.meta.client.get_waiter('table_exists').wait(TableName='points')
 
 # Print out some data about the table.
