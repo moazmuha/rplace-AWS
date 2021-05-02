@@ -90,7 +90,7 @@ wss.on('connection', function(ws) {
 			updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
 			board[o.x][o.y] = { 'r': o.r, 'g': o.g, 'b': o.b };
 			//update dynamoDB database below
-			var cmd = "python3 updateDynamoDB.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
+			var cmd = "python updateDynamoDB.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
 			exec(cmd);
 		}
 	});
