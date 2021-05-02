@@ -18,7 +18,7 @@ for(var x=0;x<dim;x++){
 }
 
 //get all points from DB 
-exec('python3 getAllPoints.py', function(error, stdout, stderr) {
+exec('python getAllPoints.py', function(error, stdout, stderr) {
 		var points = stdout.split(",")
 		var len = (points.length)/5
 		var i = 0;
@@ -90,7 +90,7 @@ wss.on('connection', function(ws) {
 			updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
 			board[o.x][o.y] = { 'r': o.r, 'g': o.g, 'b': o.b };
 			//update dynamoDB database below
-			var cmd = "python3 updateDynamoDB.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
+			var cmd = "python updateDynamoDB.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
 			exec(cmd);
 		}
 	});
@@ -108,7 +108,7 @@ const interval = setInterval(function ping() {
 
 //pull updates from DB 
 const update = setInterval(function ping() {
-	exec('python3 getAllPoints.py', function(error, stdout, stderr) {
+	exec('python getAllPoints.py', function(error, stdout, stderr) {
 		var points = stdout.split(",")
 		var len = (points.length)/5
 		var i = 0;
