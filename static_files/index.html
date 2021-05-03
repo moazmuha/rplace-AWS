@@ -100,7 +100,8 @@
 					if (xval !== null) $('#x').val(xval);
 					if (yval !== null) $('#y').val(yval);
 				}
-				// refresh page to update image and pixels
+				// refresh page to update image and pixels. Set to refresh every 30 seconds
+				// you may chage it to refresh more often
 				const update = setInterval(function reload() {
 					window.location.reload();
 				}, 30000);
@@ -131,7 +132,8 @@
 	<body>
 		<h1>r/place clone</h1>
 		<p>Select a color and click on the canvas to place a point <br>
-		You may also set points by providing the x and y coordinate</p>
+		You may also set points by providing the x and y coordinate<br>
+		To ensure you have the most up to date board, refresh the page. Board auto-updates every 30 seconds</p>
 		<p>You can place your next point after [TIME]</p>
 
 		<canvas id="canvas" width="200" height="200" ></canvas>
