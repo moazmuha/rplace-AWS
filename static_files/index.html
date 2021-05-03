@@ -35,16 +35,20 @@
 
 				// Comment out the event handler below when in production
 				$('#canvas').click(function(event){
-					var x=event.pageX-this.offsetLeft;
-					var y=event.pageY-this.offsetTop;
-					var o = { 'x': x, 'y': y, 'r': parseInt($('#r').val()), 'g': parseInt($('#g').val()), 'b': parseInt($('#b').val()) };
-					//cookie timer for spam protection
-					var timerCookie = Cookies.get("timer");
-					if (!timerCookie){
-						Cookies.set("timer", "true", { expires: 5/1440 });
-						socket.send(JSON.stringify(o));
+					if ($('#r').val() && $('#g').val() && $('#b').val()){
+						var x=event.pageX-this.offsetLeft;
+						var y=event.pageY-this.offsetTop;
+						var o = { 'x': x, 'y': y, 'r': parseInt($('#r').val()), 'g': parseInt($('#g').val()), 'b': parseInt($('#b').val()) };
+						//cookie timer for spam protection
+						var timerCookie = Cookies.get("timer");
+						if (!timerCookie){
+							Cookies.set("timer", "true", { expires: 5/1440 });
+							socket.send(JSON.stringify(o));
+						}else{
+							alert("Sorry you have to wait 5 minutes between setting points")
+						}
 					}else{
-						alert("Sorry you have to wait 5 minutes between setting points")
+						alert("Please select a color first")
 					}
 				});
 				$('#setForm').submit(function( event ) {
@@ -67,8 +71,16 @@
 					}
   					event.preventDefault();
 				});
+				$("#colorpicker").on("input", function() {
+					console.log("running")
+					const color = $(this).val();
+					$('#r').val(parseInt(color.substr(1,2), 16));
+					$('#g').val(parseInt(color.substr(3,2), 16));
+					$('#b').val(parseInt(color.substr(5,2), 16));
+				});
 				//save values of input feilds before reload
 				window.onbeforeunload = function() {
+					console.log("svaing vals")
 					sessionStorage.setItem("rval", $('#r').val());
 					sessionStorage.setItem("gval", $('#g').val());
 					sessionStorage.setItem("bval", $('#b').val());
@@ -88,27 +100,39 @@
 					if (xval !== null) $('#x').val(xval);
 					if (yval !== null) $('#y').val(yval);
 				}
-				//refresh page to update image and pixels
+				// refresh page to update image and pixels
 				const update = setInterval(function reload() {
 					window.location.reload();
-				}, 7000);
+				}, 30000);
 			});
 		</script>
 		<style>
-                        body {
-                                text-align: center;
-                                overflow: hidden;
-                                margin: 0px;
-                                padding: 0px;
-                        }
-                        canvas {
-                                border: 1px solid black;
-                        }
-                        input[type=number]{ width: 3em; }
+				body {
+					text-align: center;
+					overflow: hidden;
+					margin: 0px;
+					padding: 0px;
+				}
+				canvas {
+					border: 1px solid black;
+				}
+				input[type=number]{ width: 3em; }
+				h1 {
+					margin: 2px;
+					padding: 2px;
+				}
+				p {
+					margin: 2px;
+					padding: 2px;
+					font-size: x-small;
+				}
         </style>
 	</head>
 	<body>
 		<h1>r/place clone</h1>
+		<p>Select a color and click on the canvas to place a point <br>
+		You may also set points by providing the x and y coordinate</p>
+		<p>You can place your next point after [TIME]</p>
 
 		<canvas id="canvas" width="200" height="200" ></canvas>
 		<form id="setForm">
@@ -118,6 +142,7 @@
                         (<input type="number" id="r" placeholder="r" min="0" max="255" required>,
                         <input type="number"  id="g" placeholder="g" min="0" max="255" required>,
                         <input type="number"  id="b" placeholder="b" min="0" max="255" required>)
+						<input type="color" id="colorpicker" value="#000000">
                         &nbsp; &nbsp; &nbsp;
                         <input type="submit" name="set" value="set"/>
 		</form>
