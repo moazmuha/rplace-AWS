@@ -9,8 +9,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
-RUN apt-get update && apt-get install -y python-pip 
-RUN pip install boto3
+RUN apt-get update && apt-get install -y python3-pip 
+RUN pip3 install boto3
 # If you are building your code for production
 # RUN npm install --only=production
 
