@@ -8,7 +8,7 @@ exec('./run.sh');
 //keep track of points that have been updated
 var updatedBoard = {};
 
-var dim = 1000; // note: this is not the right dimensions!!
+var dim = 1000; // note: you may change dimensions for more pixels
 var board= new Array(dim);
 for(var x=0;x<dim;x++){
 	board[x] = new Array(dim);
@@ -55,6 +55,7 @@ function heartbeat() {
   this.isAlive = true;
 }
 
+// check if point is valid
 function isValidSet(o){
 	var isValid=false;
 	try {
@@ -69,6 +70,7 @@ function isValidSet(o){
 	} 
 	return isValid;
 }
+
 wss.on('connection', function(ws) {
 	// heartbeat
   	ws.isAlive = true;

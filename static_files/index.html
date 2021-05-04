@@ -33,7 +33,7 @@
 
 				var r = 0
 
-				// Comment out the event handler below when in production
+				// using mouse click to place points
 				$('#canvas').click(function(event){
 					if ($('#r').val() && $('#g').val() && $('#b').val()){
 						var x=event.pageX-this.offsetLeft;
@@ -51,6 +51,7 @@
 						alert("Please select a color first")
 					}
 				});
+				//using form to place points
 				$('#setForm').submit(function( event ) {
 					var o = { 'x': $('#x').val(), 
 						'y': $('#y').val(),	
@@ -71,6 +72,7 @@
 					}
   					event.preventDefault();
 				});
+				// placing color values in form 
 				$("#colorpicker").on("input", function() {
 					console.log("running")
 					const color = $(this).val();
