@@ -9,21 +9,13 @@ try:
         TableName='points',
         KeySchema=[
             {
-                'AttributeName': 'x',
+                'AttributeName': 'timestamp',
                 'KeyType': 'HASH'
-            },
-            {
-                'AttributeName': 'y',
-                'KeyType': 'RANGE'
             }
         ],
         AttributeDefinitions=[
             {
-                'AttributeName': 'x',
-                'AttributeType': 'S'
-            },
-            {
-                'AttributeName': 'y',
+                'AttributeName': 'timestamp',
                 'AttributeType': 'S'
             }
         ],
@@ -41,4 +33,3 @@ try:
 
 except:
     print("table already exists")
-    

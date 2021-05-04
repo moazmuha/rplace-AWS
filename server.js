@@ -19,19 +19,21 @@ for(var x=0;x<dim;x++){
 
 //get all points from DB 
 exec('python3 getAllPoints.py', function(error, stdout, stderr) {
-		var points = stdout.split(",")
-		var len = (points.length)/5
-		var i = 0;
-		while (i<len){
-			var x = parseInt(points[i*5+0]);
-			var y = parseInt(points[i*5+1]);
-			var r = parseInt(points[i*5+2]);
-			var g = parseInt(points[i*5+3]);
-			var b = parseInt(points[i*5+4]);	
-			var o = { 'x' : x, 'y' : y, 'r': r, 'g': g, 'b': b };
-			board[x][y]={'r':r, 'g':g, 'b':b}
-			updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
-			i += 1;
+		if (stdout !== "\n"){
+			var points = stdout.split(",")
+			var len = (points.length)/5
+			var i = 0;
+			while (i<len){
+				var x = parseInt(points[i*5+0]);
+				var y = parseInt(points[i*5+1]);
+				var r = parseInt(points[i*5+2]);
+				var g = parseInt(points[i*5+3]);
+				var b = parseInt(points[i*5+4]);	
+				var o = { 'x' : x, 'y' : y, 'r': r, 'g': g, 'b': b };
+				board[x][y]={'r':r, 'g':g, 'b':b}
+				updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
+				i += 1;
+			}
 		}
 });
 
@@ -90,7 +92,7 @@ wss.on('connection', function(ws) {
 			updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
 			board[o.x][o.y] = { 'r': o.r, 'g': o.g, 'b': o.b };
 			//update dynamoDB database below
-			var cmd = "python3 updateDynamoDB.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
+			var cmd = "python3 addPoint.py ".concat((o.x).toString(), " ", (o.y).toString(), " " ,(o.r).toString(), " ", (o.g).toString(), " ", (o.b).toString());
 			exec(cmd);
 		}
 	});
@@ -108,20 +110,22 @@ const interval = setInterval(function ping() {
 
 //pull updates from DB every 5 seconds
 const update = setInterval(function ping() {
-	exec('python3 getAllPoints.py', function(error, stdout, stderr) {
-		var points = stdout.split(",")
-		var len = (points.length)/5
-		var i = 0;
-		while (i<len){
-			var x = parseInt(points[i*5+0]);
-			var y = parseInt(points[i*5+1]);
-			var r = parseInt(points[i*5+2]);
-			var g = parseInt(points[i*5+3]);
-			var b = parseInt(points[i*5+4]);	
-			var o = { 'x' : x, 'y' : y, 'r': r, 'g': g, 'b': b };
-			board[x][y]={'r':r, 'g':g, 'b':b}
-			updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
-			i += 1;
+	exec('python3 getRecentPoints.py', function(error, stdout, stderr) {
+		if (stdout !== "\n"){
+			var points = stdout.split(",")
+			var len = (points.length)/5
+			var i = 0;
+			while (i<len){
+				var x = parseInt(points[i*5+0]);
+				var y = parseInt(points[i*5+1]);
+				var r = parseInt(points[i*5+2]);
+				var g = parseInt(points[i*5+3]);
+				var b = parseInt(points[i*5+4]);	
+				var o = { 'x' : x, 'y' : y, 'r': r, 'g': g, 'b': b };
+				board[x][y]={'r':r, 'g':g, 'b':b}
+				updatedBoard[(o.x).toString().concat(",",(o.y).toString())] = 1;
+				i += 1;
+			}
 		}
 	}); 
 }, 5000);

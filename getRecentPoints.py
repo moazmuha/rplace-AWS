@@ -1,13 +1,23 @@
+import boto3
+import time
+from datetime import datetime, timedelta
 from boto3.dynamodb.conditions import Key, Attr
-import boto3, sys
 
-# Get the service resource.
 dynamodb = boto3.resource('dynamodb')
-
 table = dynamodb.Table('points')
 try:
     create_time = table.creation_date_time
-    response = table.scan()
+    now = datetime.now()
+    last_update = now - timedelta(seconds=10)
+
+    now = now.strftime('%FT%T+13:00')
+    last_update = last_update.strftime('%FT%T+13:00')
+
+    fe = Key('timestamp').between(last_update,now);
+    response = table.scan(
+                    FilterExpression=fe
+    )
+
     items = response['Items']
     return_str = ''
     for item in items:
@@ -16,5 +26,3 @@ try:
     print(return_str)
 except:
     print("error")
-
-
