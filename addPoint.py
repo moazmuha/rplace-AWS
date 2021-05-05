@@ -5,12 +5,16 @@ from datetime import datetime, timedelta
 # Get the service resource.
 dynamodb = boto3.resource('dynamodb')
 
+# Get the points table
 table = dynamodb.Table('points')
+
+# Ensure table exists
 try:
     create_time = table.creation_date_time
 except:
     print("points table DNE")
 
+# place new point with timestamp
 try:
     table.put_item(
     Item={
