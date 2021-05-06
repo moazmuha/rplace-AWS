@@ -19,11 +19,8 @@ try:
     table.put_item(
     Item={
             'timestamp': datetime.now().strftime('%FT%T+13:00'),
-            'x': sys.argv[1],
-            'y': sys.argv[2],
-            'r': sys.argv[3],
-            'g': sys.argv[4],
-            'b': sys.argv[5]
+            'point': sys.argv[1] + ',' + sys.argv[2],
+            'rgb': sys.argv[3] + ',' + sys.argv[4] + ',' + sys.argv[5]
         }
     )
 except:

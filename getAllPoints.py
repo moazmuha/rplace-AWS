@@ -15,7 +15,14 @@ try:
     # return string of all points
     return_str = ''
     for item in items:
-        return_str += str(item['x']) + "," + str(item["y"]) + "," + str(item['r']) + "," + str(item["g"]) + "," + str(item['b']) + ","
+        point = str(item['point'])
+        x = point.split(',')[0]
+        y = point.split(',')[1]
+        rgb = str(item['rgb'])
+        r = rgb.split(',')[0]
+        g = rgb.split(',')[1]
+        b = rgb.split(',')[2]
+        return_str += x + "," + y + "," + r + "," + g + "," + b + ","
     return_str = return_str[0:len(return_str)-1]
     print(return_str)
 except:
