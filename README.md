@@ -18,7 +18,8 @@ r/place clone is an application which allows a user to place a point of the colo
 You can watch a timelapse of Place [here](https://www.youtube.com/watch?v=XnRCZK3KjUY). We created simple version of place with a 1000x1000 canvas. Users can place points or color pixels every 5 minutes. Points are stored in DynamoDB. The DynamoDB table is checked every 5 seconds for new points. Users are auto updated every 30 seconds or can manually reload the page for quicker updates. The application was deployed on EC2 instances running in an auto-scaling group. An elastic load balancer was used to distribute users across instances. Originally Route53 was used as the DNS service and a domian name was publicly available for users. The boto3 AWS SDK for Python was used to query the DynamoDB points table and also used to insert new points. You may take a look at the various Python scripts for more details.
 
 
-## Guide 
+## Guide
+Full AWS setup guide coming soon...
 
 
 ## Contributors
