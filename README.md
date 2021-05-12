@@ -31,7 +31,6 @@ If there are any problems and/or you want to contribute to this project please o
 
 ## ToDo
 Todo: <br>
-•Find out where root directory is for windows, or where aws api checks for credentials and config file <br>
 •Add timer<br>
 •set up on AWS(EC2, ELB, ASG)<br>
 •write out steps for readme
