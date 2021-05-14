@@ -1,14 +1,15 @@
 #!/bin/bash
 
-#install docker(for AWS linux ami)
-sudo yum update -y
-sudo amazon-linux-extras install docker
+#bootstrap script for AWS instances
+#install docker(for AWS ubunutu AMI)
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt install docker-ce docker-ce-cli containerd.io
 
-#start docker service
-sudo service docker start
-
-#give ec2-user permissino to run docker without sudo
-sudo usermod -a -G docker ec2-user
+#check that docker was installed
+sudo systemctl status docker
 
 #run docker container(ensure security group is configured to allow this traffic)
-docker run -p 80:8080 -p 8081:8081 moazmuha/rplace
+sudo docker run -p 80:8080 -p 8081:8081 moazmuha/rplace
