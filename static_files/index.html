@@ -62,12 +62,12 @@
 							var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 							
 							// Display the result in the element with id="timer"
-							document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+							$('#timer').val(minutes + "m " + seconds + "s ");
 							
 							// If the count down is finished, write some text
 							if (distance < 0) {
 								clearInterval(x);
-								document.getElementById("timer").innerHTML = "Ready for New Point";
+								$("timer").val("Ready for New Point");
 							}
 							}, 1000);
 						}else{
@@ -114,17 +114,14 @@
 					sessionStorage.setItem("bval", $('#b').val());
 					sessionStorage.setItem("xval", $('#x').val());
 					sessionStorage.setItem("yval", $('#y').val());
-					sessionStorage.setItem("time", $('#timer').val());
 				}
 				//load values of inputs after reloaded
 				window.onload = function() {
-					var time = sessionStorage.getItem("time");
 					var rval = sessionStorage.getItem("rval");
 					var gval = sessionStorage.getItem("gval");
 					var bval = sessionStorage.getItem("bval");
 					var xval = sessionStorage.getItem("xval");
 					var yval = sessionStorage.getItem("yval");
-					if (time !== null) $('#timer').val(time);
 					if (rval !== null) $('#r').val(rval);
 					if (gval !== null) $('#g').val(gval);
 					if (bval !== null) $('#b').val(bval);
