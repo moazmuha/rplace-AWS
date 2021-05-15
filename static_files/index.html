@@ -46,7 +46,8 @@
 							Cookies.set("timer", "true", { expires: 5/1440 });
 							socket.send(JSON.stringify(o));
 							// Set the date we're counting down to
-							var timeend = new Date().getTime() + 300000;
+							var timeend = sessionStorage.getItem("timeend");
+							if (!timeend) var timeend = new Date().getTime() + 300000;
 							
 							// Update the count down every 1 second
 							var x = setInterval(function() {
@@ -108,7 +109,8 @@
 				});
 				//save values of input feilds before reload
 				window.onbeforeunload = function() {
-					console.log("svaing vals")
+					console.log("saving vals")
+					if (timeend) sessionStorage.setItem("timeend", timeend);
 					sessionStorage.setItem("rval", $('#r').val());
 					sessionStorage.setItem("gval", $('#g').val());
 					sessionStorage.setItem("bval", $('#b').val());
