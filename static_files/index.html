@@ -36,6 +36,7 @@
 				// using mouse click to place points
 				$('#canvas').click(function(event){
 					if ($('#r').val() && $('#g').val() && $('#b').val()){
+						
 						var x=event.pageX-this.offsetLeft;
 						var y=event.pageY-this.offsetTop;
 						var o = { 'x': x, 'y': y, 'r': parseInt($('#r').val()), 'g': parseInt($('#g').val()), 'b': parseInt($('#b').val()) };
@@ -44,6 +45,31 @@
 						if (!timerCookie){
 							Cookies.set("timer", "true", { expires: 5/1440 });
 							socket.send(JSON.stringify(o));
+							// Set the date we're counting down to
+							var timeend = new Date().getTime() + 300000;
+							
+							// Update the count down every 1 second
+							var x = setInterval(function() {
+							
+							// Get today's date and time
+							var now = new Date().getTime();
+							
+							// Find the distance between now and the count down date
+							var distance = timeend - now;
+							
+							// Time calculations for days, hours, minutes and seconds
+							var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+							var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+							
+							// Display the result in the element with id="demo"
+							document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+							
+							// If the count down is finished, write some text
+							if (distance < 0) {
+								clearInterval(x);
+								document.getElementById("demo").innerHTML = "Ready for New Point";
+							}
+							}, 1000);
 						}else{
 							alert("Sorry you have to wait 5 minutes between setting points")
 						}
@@ -139,34 +165,6 @@
 		<p>You can place your next point after 
 			
 			<p id="demo"></p>
-
-			<script>
-			// Set the date we're counting down to
-			var countDownDate = new Date().getTime() + 300000;
-			
-			// Update the count down every 1 second
-			var x = setInterval(function() {
-			
-			  // Get today's date and time
-			  var now = new Date().getTime();
-			
-			  // Find the distance between now and the count down date
-			  var distance = countDownDate - now;
-			
-			  // Time calculations for days, hours, minutes and seconds
-			  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-			
-			  // Display the result in the element with id="demo"
-			  document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
-			
-			  // If the count down is finished, write some text
-			  if (distance < 0) {
-				clearInterval(x);
-				document.getElementById("demo").innerHTML = "Ready for New Point";
-			  }
-			}, 1000);
-			</script>
 		</p>
 
 		<canvas id="canvas" width="200" height="200" ></canvas>
