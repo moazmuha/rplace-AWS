@@ -61,13 +61,13 @@
 							var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 							var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 							
-							// Display the result in the element with id="demo"
-							document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+							// Display the result in the element with id="timer"
+							document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 							
 							// If the count down is finished, write some text
 							if (distance < 0) {
 								clearInterval(x);
-								document.getElementById("demo").innerHTML = "Ready for New Point";
+								document.getElementById("timer").innerHTML = "Ready for New Point";
 							}
 							}, 1000);
 						}else{
@@ -114,14 +114,17 @@
 					sessionStorage.setItem("bval", $('#b').val());
 					sessionStorage.setItem("xval", $('#x').val());
 					sessionStorage.setItem("yval", $('#y').val());
+					sessionStorage.setItem("timer", $('#timer').val());
 				}
 				//load values of inputs after reloaded
 				window.onload = function() {
+					var time = sessionStorage.getItem("timer");
 					var rval = sessionStorage.getItem("rval");
 					var gval = sessionStorage.getItem("gval");
 					var bval = sessionStorage.getItem("bval");
 					var xval = sessionStorage.getItem("xval");
 					var yval = sessionStorage.getItem("yval");
+					if (time !== null) $('#timer').val(time);
 					if (rval !== null) $('#r').val(rval);
 					if (gval !== null) $('#g').val(gval);
 					if (bval !== null) $('#b').val(bval);
@@ -164,7 +167,7 @@
 		To ensure you have the most up to date board, refresh the page. Board auto-updates every 30 seconds</p>
 		<p>You can place your next point after 
 			
-			<p id="demo"></p>
+			<p id="timer"></p>
 		</p>
 
 		<canvas id="canvas" width="200" height="200" ></canvas>
