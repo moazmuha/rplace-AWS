@@ -41,13 +41,12 @@
 						var y=event.pageY-this.offsetTop;
 						var o = { 'x': x, 'y': y, 'r': parseInt($('#r').val()), 'g': parseInt($('#g').val()), 'b': parseInt($('#b').val()) };
 						//cookie timer for spam protection
-						var timerCookie = Cookies.get("timer");
+						var timerCookie = Cookies.get("timeend");
 						if (!timerCookie){
-							Cookies.set("timer", "true", { expires: 5/1440 });
 							socket.send(JSON.stringify(o));
 							// Set the date we're counting down to
-							var timeend = sessionStorage.getItem("timeend");
-							if (!timeend) var timeend = new Date().getTime() + 300000;
+							var timeend = new Date().getTime() + 300000;
+							Cookies.set("timeend", timeend, { expires: 5/1440 });
 							
 							// Update the count down every 1 second
 							var x = setInterval(function() {
@@ -68,6 +67,7 @@
 							// If the count down is finished, write some text
 							if (distance < 0) {
 								clearInterval(x);
+								Cookies.remove('timeend');
 								$("#timer").html("Ready for New Point");
 							}
 							}, 1000);
@@ -90,9 +90,35 @@
 						o[key]=parseInt(o[key]);
 					}
 					//cookie timer for spam protection
-					var timerCookie = Cookies.get("timer");
+					var timerCookie = Cookies.get("timeend");
 					if (!timerCookie){
-						Cookies.set("timer", "true", { expires: 5/1440 });
+						var timeend = new Date().getTime() + 300000;
+						Cookies.set("timeend", timeend, { expires: 5/1440 });
+
+						// Update the count down every 1 second
+						var x = setInterval(function() {
+							
+						// Get today's date and time
+						var now = new Date().getTime();
+						
+						// Find the distance between now and the count down date
+						var distance = timeend - now;
+						
+						// Time calculations for days, hours, minutes and seconds
+						var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+						var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+						
+						// Display the result in the element with id="timer"
+						$('#timer').html(minutes + "m " + seconds + "s ");
+						
+						// If the count down is finished, write some text
+						if (distance < 0) {
+							clearInterval(x);
+							Cookies.remove('timeend');
+							$("#timer").html("Ready for New Point");
+						}
+						}, 1000);
+
 						socket.send(JSON.stringify(o));
 					}else{
 						alert("Sorry you have to wait 5 minutes between setting points")
@@ -110,7 +136,6 @@
 				//save values of input feilds before reload
 				window.onbeforeunload = function() {
 					console.log("saving vals")
-					if (timeend) sessionStorage.setItem("timeend", timeend);
 					sessionStorage.setItem("rval", $('#r').val());
 					sessionStorage.setItem("gval", $('#g').val());
 					sessionStorage.setItem("bval", $('#b').val());
@@ -131,7 +156,33 @@
 					if (bval !== null) $('#b').val(bval);
 					if (xval !== null) $('#x').val(xval);
 					if (yval !== null) $('#y').val(yval);
-					if (timer !== null) $('#timer').html(timer);
+
+					var timerCookie = Cookies.get("timeend");
+					if (timerCookie) {
+						// Update the count down every 1 second
+						var x = setInterval(function() {
+							
+						// Get today's date and time
+						var now = new Date().getTime();
+						
+						// Find the distance between now and the count down date
+						var distance = timeend - now;
+						
+						// Time calculations for days, hours, minutes and seconds
+						var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+						var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+						
+						// Display the result in the element with id="timer"
+						$('#timer').html(minutes + "m " + seconds + "s ");
+						
+						// If the count down is finished, write some text
+						if (distance < 0) {
+							clearInterval(x);
+							Cookies.remove('timeend');
+							$("#timer").html("Ready for New Point");
+						}
+						}, 1000);
+					}
 				}
 				// refresh page to update image and pixels. Set to refresh every 30 seconds
 				// you may change it to refresh more often
