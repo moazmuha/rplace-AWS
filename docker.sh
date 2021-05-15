@@ -11,5 +11,6 @@ sudo apt install docker-ce docker-ce-cli containerd.io
 #check that docker was installed
 sudo systemctl status docker
 
+#make sure credentials are set
 #run docker container(ensure security group is configured to allow this traffic)
 sudo docker run -p 80:8080 -p 8081:8081 moazmuha/rplace
