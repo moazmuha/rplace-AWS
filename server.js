@@ -6,7 +6,7 @@ const exec = require('child_process').exec;
 exec('./run.sh');
 
 //keep track of points that have been updated
-
+var updatedBoard = {};
 var dim = 1000; // note: you may change dimensions for more pixels
 var board= new Array(dim);
 for(var x=0;x<dim;x++){
