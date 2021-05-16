@@ -18,4 +18,4 @@ docker run -p 80:8080 -p 8081:8081 huzaifam/rplace
 
 #bootstrap script if created AMI
 #!/bin/bash
-sudo docker run -p 80:8080 -p 8081:8081 huzaifam/rplace
+sudo docker run -p 8080:8080 -p 8081:8081 huzaifam/rplace
