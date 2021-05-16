@@ -39,6 +39,7 @@ You can watch a timelapse of Place [here](https://www.youtube.com/watch?v=XnRCZK
 7. Under the "configure advanced details" page when creating the auto scaling group, select attach an existing load balancer and choose the previous two target groups created in step 4. Optionally select new capacities for group size and set scaling policies and create the auto scaling group.
 8. Congratulations, you have now created a scalable and redundant load balancing AWS application.
 
+Make sure you delete all your instances and services to avoid incurring unnecessary charges.
 
 ## Contributors
 •[Muhammad Moaz](https://github.com/moazmuha) <br>
