@@ -10,7 +10,6 @@
 2. [Guide](#guide)
 3. [Contributors](#contributors)
 4. [Notes](#notes)
-5. [Huzaifa TODO notes](#todo)
 
 ## Introduction
 r/place clone is an application which allows a user to place a point of the color of their choice on a canvas. Each user can only place one point every 5 minutes. It was inspired by the original [Place](https://en.wikipedia.org/wiki/Place_(Reddit)) application which was a collaborative project and social experiment created on a subreddit called [r/place](https://www.reddit.com/r/place/). Registered users were only allowed to place a point AKA color a pixel every 5-20 minutes. The project lasted 72 hours. In the early hours it was just a mess of points, however slowly users started to collaborate and created a spectacular work of art. Here is the final product: 
@@ -19,7 +18,18 @@ You can watch a timelapse of Place [here](https://www.youtube.com/watch?v=XnRCZK
 
 
 ## Guide
-Full AWS setup guide coming soon...
+### Setting up r/place on a single instance
+1. Clone this repo
+2. Create an IAM user with permissions to read/write from DynamoDB(or simply give Administrator Access)
+3. Place the credentials from the IAM user into the credentials file
+4. Run the createPointsTable.py script to create the table in DynamoDB
+5. Create a security group which allows all inbound traffic on ports 8080 and 8081 and traffic from your IP on port 22
+6. Create a Ubunutu instance via the EC2 console, attaching the security group from the previous step to the instance
+7. SSH into the instance
+8. Run each line from the docker.sh file in the instance
+9. Your rplace applicatino should be running at this point. Test it by reaching out to http://{InstancePublicIP}:8080/ via your browser
+
+
 
 
 ## Contributors
@@ -28,9 +38,3 @@ Full AWS setup guide coming soon...
 
 ## Notes
 If there are any problems and/or you want to contribute to this project please open an issue.
-
-## ToDo
-Todo: <br>
-•Add timer<br>
-•set up on AWS(EC2, ELB, ASG)<br>
-•write out steps for readme
